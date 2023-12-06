@@ -39,5 +39,6 @@ export class SageMakerRagModels extends Construct {
     });
 
     this.model = model;
+    // this.model = undefined as any;
   }
 }

@@ -3,6 +3,7 @@ import { FormField, Toggle } from "@cloudscape-design/components";
 interface HybridSearchProps {
   submitting: boolean;
   onChange: (data: Partial<{ hybridSearch: boolean }>) => void;
+  // default value is false
   checked: boolean;
   errors: Record<string, string | string[]>;
 }
@@ -16,7 +17,7 @@ export function HybridSearchField(props: HybridSearchProps) {
     >
       <Toggle
         disabled={props.submitting}
-        checked={props.checked}
+        checked={false}
         onChange={({ detail: { checked } }) =>
           props.onChange({ hybridSearch: checked })
         }
