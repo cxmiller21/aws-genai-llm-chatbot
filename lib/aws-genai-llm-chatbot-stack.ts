@@ -151,10 +151,12 @@ export class AwsGenAILLMChatbotStack extends cdk.Stack {
       restApi: chatBotApi.restApi,
       webSocketApi: chatBotApi.webSocketApi,
       chatbotFilesBucket: chatBotApi.filesBucket,
-      crossEncodersEnabled:
-        typeof ragEngines?.sageMakerRagModels?.model !== "undefined",
-      sagemakerEmbeddingsEnabled:
-        typeof ragEngines?.sageMakerRagModels?.model !== "undefined",
+      crossEncodersEnabled: false,
+      sagemakerEmbeddingsEnabled: false,
+      // crossEncodersEnabled:
+      //   typeof ragEngines?.sageMakerRagModels?.model !== "undefined",
+      // sagemakerEmbeddingsEnabled:
+      //   typeof ragEngines?.sageMakerRagModels?.model !== "undefined",
     });
   }
 }

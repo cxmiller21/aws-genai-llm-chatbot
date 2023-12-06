@@ -71,9 +71,10 @@ export class RestApi extends Construct {
           props.ragEngines?.documentsByCompountKeyIndexName ?? "",
         DOCUMENTS_BY_STATUS_INDEX:
           props.ragEngines?.documentsByStatusIndexName ?? "",
-        SAGEMAKER_RAG_MODELS_ENDPOINT:
-          props.ragEngines?.sageMakerRagModels?.model.endpoint
-            ?.attrEndpointName ?? "",
+        // SAGEMAKER_RAG_MODELS_ENDPOINT:
+        //   props.ragEngines?.sageMakerRagModels?.model.endpoint
+        //     ?.attrEndpointName ?? "",
+        SAGEMAKER_RAG_MODELS_ENDPOINT: "",
         DELETE_WORKSPACE_WORKFLOW_ARN:
           props.ragEngines?.deleteWorkspaceWorkflow?.stateMachineArn ?? "",
         CREATE_AURORA_WORKSPACE_WORKFLOW_ARN:
@@ -214,14 +215,14 @@ export class RestApi extends Construct {
       props.ragEngines.deleteWorkspaceWorkflow.grantStartExecution(apiHandler);
     }
 
-    if (props.ragEngines?.sageMakerRagModels) {
-      apiHandler.addToRolePolicy(
-        new iam.PolicyStatement({
-          actions: ["sagemaker:InvokeEndpoint"],
-          resources: [props.ragEngines.sageMakerRagModels.model.endpoint.ref],
-        })
-      );
-    }
+    // if (props.ragEngines?.sageMakerRagModels) {
+    //   apiHandler.addToRolePolicy(
+    //     new iam.PolicyStatement({
+    //       actions: ["sagemaker:InvokeEndpoint"],
+    //       resources: [props.ragEngines.sageMakerRagModels.model.endpoint.ref],
+    //     })
+    //   );
+    // }
 
     for (const model of props.models) {
       apiHandler.addToRolePolicy(

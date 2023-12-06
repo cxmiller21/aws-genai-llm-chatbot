@@ -9,7 +9,7 @@ import { DataImport } from "./data-import";
 import { KendraRetrieval } from "./kendra-retrieval";
 import { OpenSearchVector } from "./opensearch-vector";
 import { RagDynamoDBTables } from "./rag-dynamodb-tables";
-import { SageMakerRagModels } from "./sagemaker-rag-models";
+// import { SageMakerRagModels } from "./sagemaker-rag-models";
 import { Workspaces } from "./workspaces";
 
 export interface RagEnginesProps {
@@ -21,7 +21,8 @@ export class RagEngines extends Construct {
   public readonly auroraPgVector: AuroraPgVector | null;
   public readonly openSearchVector: OpenSearchVector | null;
   public readonly kendraRetrieval: KendraRetrieval | null;
-  public readonly sageMakerRagModels: SageMakerRagModels | null;
+  // public readonly sageMakerRagModels: SageMakerRagModels | null;
+  public readonly sageMakerRagModels: null;
   public readonly uploadBucket: s3.Bucket;
   public readonly processingBucket: s3.Bucket;
   public readonly documentsTable: dynamodb.Table;
@@ -39,15 +40,17 @@ export class RagEngines extends Construct {
 
     const tables = new RagDynamoDBTables(this, "RagDynamoDBTables");
 
-    let sageMakerRagModels: SageMakerRagModels | null = null;
+    // let sageMakerRagModels: SageMakerRagModels | null = null;
+    let sageMakerRagModels: null = null;
     if (
       props.config.rag.engines.aurora.enabled ||
       props.config.rag.engines.opensearch.enabled
     ) {
-      sageMakerRagModels = new SageMakerRagModels(this, "SageMaker", {
-        shared: props.shared,
-        config: props.config,
-      });
+      // sageMakerRagModels = new SageMakerRagModels(this, "SageMaker", {
+      //   shared: props.shared,
+      //   config: props.config,
+      // });
+      console.log("sageMakerRagModels")
     }
 
     let auroraPgVector: AuroraPgVector | null = null;
@@ -81,7 +84,7 @@ export class RagEngines extends Construct {
       shared: props.shared,
       config: props.config,
       auroraDatabase: auroraPgVector?.database,
-      sageMakerRagModels: sageMakerRagModels ?? undefined,
+      // sageMakerRagModels: sageMakerRagModels ?? undefined,
       workspacesTable: tables.workspacesTable,
       documentsTable: tables.documentsTable,
       ragDynamoDBTables: tables,

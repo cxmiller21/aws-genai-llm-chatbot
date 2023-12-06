@@ -1,44 +1,55 @@
-import * as cdk from "aws-cdk-lib";
-import { Construct } from "constructs";
-import * as path from "path";
-import { DeploymentType, SageMakerModel } from "../../sagemaker-model";
-import { Shared } from "../../shared";
-import { SystemConfig } from "../../shared/types";
+// import * as cdk from "aws-cdk-lib";
+// import { Construct } from "constructs";
+// import * as path from "path";
+// import { DeploymentType, SageMakerModel } from "../../sagemaker-model";
+// import { Shared } from "../../shared";
+// import { SystemConfig } from "../../shared/types";
 
-export interface SageMakerRagModelsProps {
-  readonly config: SystemConfig;
-  readonly shared: Shared;
-}
+// export interface SageMakerRagModelsProps {
+//   readonly config: SystemConfig;
+//   readonly shared: Shared;
+// }
 
-export class SageMakerRagModels extends Construct {
-  readonly model: SageMakerModel;
+// export class SageMakerRagModels extends Construct {
+//   // readonly model: SageMakerModel;
+//   readonly model: {
+//     endpoint: {
+//       attrEndpointName: string;
+//       ref: "";
+//     }
+//   };
 
-  constructor(scope: Construct, id: string, props: SageMakerRagModelsProps) {
-    super(scope, id);
+//   constructor(scope: Construct, id: string, props: SageMakerRagModelsProps) {
+//     super(scope, id);
 
-    const sageMakerEmbeddingsModelIds = props.config.rag.embeddingsModels
-      .filter((c) => c.provider === "sagemaker")
-      .map((c) => c.name);
+//     const sageMakerEmbeddingsModelIds = props.config.rag.embeddingsModels
+//       .filter((c) => c.provider === "sagemaker")
+//       .map((c) => c.name);
 
-    const sageMakerCrossEncoderModelIds = props.config.rag.crossEncoderModels
-      .filter((c) => c.provider === "sagemaker")
-      .map((c) => c.name);
+//     const sageMakerCrossEncoderModelIds = props.config.rag.crossEncoderModels
+//       .filter((c) => c.provider === "sagemaker")
+//       .map((c) => c.name);
 
-    const model = new SageMakerModel(this, "Model", {
-      vpc: props.shared.vpc,
-      region: cdk.Aws.REGION,
-      model: {
-        type: DeploymentType.CustomInferenceScript,
-        modelId: [
-          ...sageMakerEmbeddingsModelIds,
-          ...sageMakerCrossEncoderModelIds,
-        ],
-        codeFolder: path.join(__dirname, "./model"),
-        instanceType: "ml.g4dn.xlarge",
-      },
-    });
+//     // const model = new SageMakerModel(this, "Model", {
+//     //   vpc: props.shared.vpc,
+//     //   region: cdk.Aws.REGION,
+//     //   model: {
+//     //     type: DeploymentType.CustomInferenceScript,
+//     //     modelId: [
+//     //       ...sageMakerEmbeddingsModelIds,
+//     //       ...sageMakerCrossEncoderModelIds,
+//     //     ],
+//     //     codeFolder: path.join(__dirname, "./model"),
+//     //     instanceType: "ml.g4dn.xlarge",
+//     //   },
+//     // });
 
-    this.model = model;
-    // this.model = undefined as any;
-  }
-}
+//     // this.model = model;
+//     this.model = {
+//       endpoint: {
+//         attrEndpointName: "",
+//         ref: ""
+//       }
+//     };
+//   }
+// }

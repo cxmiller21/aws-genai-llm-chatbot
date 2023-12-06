@@ -10,7 +10,7 @@ import { WebsiteCrawlingWorkflow } from "./website-crawling-workflow";
 import { RssSubscription } from "./rss-subscription";
 import { OpenSearchVector } from "../opensearch-vector";
 import { KendraRetrieval } from "../kendra-retrieval";
-import { SageMakerRagModels } from "../sagemaker-rag-models";
+// import { SageMakerRagModels } from "../sagemaker-rag-models";
 import * as s3 from "aws-cdk-lib/aws-s3";
 import * as sqs from "aws-cdk-lib/aws-sqs";
 import * as lambda from "aws-cdk-lib/aws-lambda";
@@ -30,7 +30,7 @@ export interface DataImportProps {
   readonly ragDynamoDBTables: RagDynamoDBTables;
   readonly openSearchVector?: OpenSearchVector;
   readonly kendraRetrieval?: KendraRetrieval;
-  readonly sageMakerRagModels?: SageMakerRagModels;
+  // readonly sageMakerRagModels?: SageMakerRagModels;
   readonly workspacesTable: dynamodb.Table;
   readonly documentsTable: dynamodb.Table;
   readonly workspacesByObjectTypeIndexName: string;
@@ -110,7 +110,7 @@ export class DataImport extends Construct {
         processingBucket,
         auroraDatabase: props.auroraDatabase,
         ragDynamoDBTables: props.ragDynamoDBTables,
-        sageMakerRagModelsEndpoint: props.sageMakerRagModels?.model.endpoint,
+        // sageMakerRagModelsEndpoint: props.sageMakerRagModels?.model.endpoint,
         openSearchVector: props.openSearchVector,
       }
     );
@@ -126,27 +126,27 @@ export class DataImport extends Construct {
       }
     );
 
-    const websiteCrawlingWorkflow = new WebsiteCrawlingWorkflow(
-      this,
-      "WebsiteCrawlingWorkflow",
-      {
-        shared: props.shared,
-        config: props.config,
-        processingBucket,
-        auroraDatabase: props.auroraDatabase,
-        ragDynamoDBTables: props.ragDynamoDBTables,
-        sageMakerRagModelsEndpoint: props.sageMakerRagModels?.model.endpoint,
-        openSearchVector: props.openSearchVector,
-      }
-    );
+    // const websiteCrawlingWorkflow = new WebsiteCrawlingWorkflow(
+    //   this,
+    //   "WebsiteCrawlingWorkflow",
+    //   {
+    //     shared: props.shared,
+    //     config: props.config,
+    //     processingBucket,
+    //     auroraDatabase: props.auroraDatabase,
+    //     ragDynamoDBTables: props.ragDynamoDBTables,
+    //     sageMakerRagModelsEndpoint: props.sageMakerRagModels?.model.endpoint,
+    //     openSearchVector: props.openSearchVector,
+    //   }
+    // );
 
-    const rssSubscription = new RssSubscription(this, "RssSubscription", {
-      shared: props.shared,
-      config: props.config,
-      processingBucket: processingBucket,
-      ragDynamoDBTables: props.ragDynamoDBTables,
-      websiteCrawlerStateMachine: websiteCrawlingWorkflow.stateMachine,
-    });
+    // const rssSubscription = new RssSubscription(this, "RssSubscription", {
+    //   shared: props.shared,
+    //   config: props.config,
+    //   processingBucket: processingBucket,
+    //   ragDynamoDBTables: props.ragDynamoDBTables,
+    //   websiteCrawlerStateMachine: websiteCrawlingWorkflow.stateMachine,
+    // });
 
     const uploadHandler = new lambda.Function(this, "UploadHandler", {
       code: props.shared.sharedCode.bundleWithLambdaAsset(
@@ -174,8 +174,8 @@ export class DataImport extends Construct {
         DOCUMENTS_TABLE_NAME: props.documentsTable.tableName ?? "",
         DOCUMENTS_BY_COMPOUND_KEY_INDEX_NAME:
           props.documentsByCompoundKeyIndexName ?? "",
-        SAGEMAKER_RAG_MODELS_ENDPOINT:
-          props.sageMakerRagModels?.model.endpoint.attrEndpointName ?? "",
+        // SAGEMAKER_RAG_MODELS_ENDPOINT:
+        //   props.sageMakerRagModels?.model.endpoint.attrEndpointName ?? "",
         FILE_IMPORT_WORKFLOW_ARN:
           fileImportWorkflow?.stateMachine.stateMachineArn ?? "",
         DEFAULT_KENDRA_S3_DATA_SOURCE_BUCKET_NAME:
@@ -213,7 +213,7 @@ export class DataImport extends Construct {
     this.processingBucket = processingBucket;
     this.ingestionQueue = ingestionQueue;
     this.fileImportWorkflow = fileImportWorkflow.stateMachine;
-    this.websiteCrawlingWorkflow = websiteCrawlingWorkflow.stateMachine;
-    this.rssIngestorFunction = rssSubscription.rssIngestorFunction;
+    // this.websiteCrawlingWorkflow = websiteCrawlingWorkflow.stateMachine;
+    // this.rssIngestorFunction = rssSubscription.rssIngestorFunction;
   }
 }

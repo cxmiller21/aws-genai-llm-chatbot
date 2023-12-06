@@ -214,7 +214,11 @@ export class IdeficsInterface extends Construct {
     endpoint,
     name,
   }: {
-    endpoint: CfnEndpoint;
+    // endpoint: CfnEndpoint;
+    endpoint: {
+      attrEndpointName: string;
+      ref: string;
+    }
     name: string;
   }) {
     this.requestHandler.addToRolePolicy(

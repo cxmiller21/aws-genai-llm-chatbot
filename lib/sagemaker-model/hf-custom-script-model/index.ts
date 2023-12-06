@@ -28,7 +28,11 @@ export interface HuggingFaceCustomScriptModelProps {
 
 export class HuggingFaceCustomScriptModel extends Construct {
   public readonly model: sagemaker.CfnModel;
-  public readonly endpoint: sagemaker.CfnEndpoint;
+  // public readonly endpoint: sagemaker.CfnEndpoint;
+  public readonly endpoint: {
+    attrEndpointName: string;
+    ref: string;
+  };
 
   constructor(
     scope: Construct,

@@ -8,7 +8,11 @@ import { deployPackageModel } from "./deploy-package-model";
 import { DeploymentType, SageMakerModelProps } from "./types";
 
 export class SageMakerModel extends Construct {
-  public readonly endpoint: sagemaker.CfnEndpoint;
+  // public readonly endpoint: sagemaker.CfnEndpoint;
+  public readonly endpoint: {
+    attrEndpointName: string;
+    ref: string;
+  };
   public readonly modelId: string | string[];
 
   constructor(scope: Construct, id: string, props: SageMakerModelProps) {

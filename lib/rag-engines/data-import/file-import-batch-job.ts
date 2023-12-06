@@ -19,7 +19,11 @@ export interface FileImportBatchJobProps {
   readonly processingBucket: s3.Bucket;
   readonly ragDynamoDBTables: RagDynamoDBTables;
   readonly auroraDatabase?: rds.DatabaseCluster;
-  readonly sageMakerRagModelsEndpoint?: sagemaker.CfnEndpoint;
+  // readonly sageMakerRagModelsEndpoint?: sagemaker.CfnEndpoint;
+  readonly sageMakerRagModelsEndpoint?: {
+    attrEndpointName: string;
+    ref: string;
+  };
   readonly openSearchVector?: OpenSearchVector;
 }
 

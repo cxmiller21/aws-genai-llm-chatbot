@@ -55,9 +55,10 @@ export class LangChainInterface extends Construct {
           props.ragEngines?.workspacesByObjectTypeIndexName ?? "",
         AURORA_DB_SECRET_ID: props.ragEngines?.auroraPgVector?.database?.secret
           ?.secretArn as string,
-        SAGEMAKER_RAG_MODELS_ENDPOINT:
-          props.ragEngines?.sageMakerRagModels?.model.endpoint
-            ?.attrEndpointName ?? "",
+        SAGEMAKER_RAG_MODELS_ENDPOINT: "",
+        // SAGEMAKER_RAG_MODELS_ENDPOINT:
+        //   props.ragEngines?.sageMakerRagModels?.model.endpoint
+        //     ?.attrEndpointName ?? "",
         OPEN_SEARCH_COLLECTION_ENDPOINT:
           props.ragEngines?.openSearchVector?.openSearchCollectionEndpoint ??
           "",
@@ -125,14 +126,14 @@ export class LangChainInterface extends Construct {
       props.ragEngines.documentsTable.grantReadWriteData(requestHandler);
     }
 
-    if (props.ragEngines?.sageMakerRagModels) {
-      requestHandler.addToRolePolicy(
-        new iam.PolicyStatement({
-          actions: ["sagemaker:InvokeEndpoint"],
-          resources: [props.ragEngines.sageMakerRagModels.model.endpoint.ref],
-        })
-      );
-    }
+    // if (props.ragEngines?.sageMakerRagModels) {
+    //   requestHandler.addToRolePolicy(
+    //     new iam.PolicyStatement({
+    //       actions: ["sagemaker:InvokeEndpoint"],
+    //       resources: [props.ragEngines.sageMakerRagModels.model.endpoint.ref],
+    //     })
+    //   );
+    // }
 
     if (props.ragEngines?.kendraRetrieval) {
       props.ragEngines?.kendraRetrieval?.kendraS3DataSourceBucket?.grantRead(
@@ -226,7 +227,11 @@ export class LangChainInterface extends Construct {
     endpoint,
     name,
   }: {
-    endpoint: CfnEndpoint;
+    // endpoint: CfnEndpoint;
+    endpoint: {
+      attrEndpointName: string;
+      ref: string;
+    }
     name: string;
   }) {
     this.requestHandler.addToRolePolicy(

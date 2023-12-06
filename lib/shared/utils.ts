@@ -40,11 +40,12 @@ export abstract class Utils {
       (model) => model.default === true
     );
 
-    if (!defaultModel) {
-      throw new Error("No default cross encoder model found");
-    }
+    // if (!defaultModel) {
+    //   throw new Error("No default cross encoder model found");
+    // }
 
-    return `${defaultModel.provider}::${defaultModel.name}`;
+    // return `${defaultModel.provider}::${defaultModel.name}`;
+    return "cross-encoder/test-none";
   }
 
   static getName(config: SystemConfig, value: string, maxLength = 28): string {

@@ -78,12 +78,12 @@ export function deployContainerModel(
 
   endpointConfig.addDependency(model);
 
-  const endpoint = new sagemaker.CfnEndpoint(scope, modelId, {
-    endpointConfigName: endpointConfig.getAtt("EndpointConfigName").toString(),
-    endpointName: modelId.split("/").join("-").split(".").join("-"),
-  });
+  // const endpoint = new sagemaker.CfnEndpoint(scope, modelId, {
+  //   endpointConfigName: endpointConfig.getAtt("EndpointConfigName").toString(),
+  //   endpointName: modelId.split("/").join("-").split(".").join("-"),
+  // });
 
-  endpoint.addDependency(endpointConfig);
+  // endpoint.addDependency(endpointConfig);
 
-  return { model, endpoint };
+  // return { model, endpoint };
 }
